@@ -1,0 +1,198 @@
+POST http://localhost:5000/api/jss/signup
+Content-Type: application/json
+
+{
+    "AdmNumber":"2158",
+    "firstName":"Marium",
+    "lastName":"Njole",
+    "Grade":"9D",
+    "Gender":"female",
+    "DOB":"2004-09-29",
+    "Residence":"Katikirieni",
+    "Religion":"Muslim",
+    "Nationality":"Kenyan",
+    "Status":"active",
+    "Category":"boarder"
+}
+###
+PUT http://localhost:5000/api/jss/Updatestudent/1234
+Content-Type: application/json
+
+{
+    
+    "firstName":"Lucky",
+    "lastName":"Nguya",
+    "Gender":"female",
+    "Grade":"9D",
+    "Residence":"Katikirieni",
+    "Nationality":"USA",
+    "Religion":"Christianity",
+    "Status":"active",
+    "Category":"boarder",
+    "DOB":"2010-03-04"
+
+}
+###
+POST http://localhost:5000/api/jss/login
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZmlyc3RfbmFtZSI6Im51ZWwiLCJpYXQiOjE3ODI4NjU1OTcsImV4cCI6MTc4Mjg2NzM5N30.MsM-h3eU-ICaWQ3RLGXB4qjFBiz8Ps9mvKX1iwBKN3E 
+
+{
+    "admNumber":"1633",
+    "firstName":"nuel",
+    "lastName":"Mrima",
+     "Password":"home@gmail.com"
+}
+###
+POST http://localhost:5000/api/jss/users_signup
+Content-Type: application/json
+
+{
+    "Username":"Mr. James",
+    "Email":"james2@gmail.com",
+    "Password":"James@maths",
+    "Role":"teacher"
+}
+
+###
+POST http://localhost:5000/api/jss/teachers_signup
+Content-Type: application/json
+
+{
+    "firstName":"Mr. James",
+    "lastName":"Lukuki",
+    "tscNumber":"49998",
+    "Email":"james2@gmail.com",
+    "Gender":"male",
+    "assignedGrade":"7A",
+    "phoneNumber":"0712633445",
+    "Department":"Mathematics",
+    "Subject":"Maths"
+}
+
+
+###
+POST http://localhost:5000/api/jss/registerParent
+Content-Type: application/json
+
+{
+    "parentsFirstName":"LucKy",
+    "parentLastName":"Jumbale",
+    "childNumber":"1634",
+    "parentEmail":"luga@gmail.com",
+    "Occupation":"farmer",
+    "parentsPhonenumber":"0712633445",
+    "parents_nationality":"Kenyan"
+}
+
+###
+
+
+POST http://localhost:5000/api/jss/desktop_login
+Content-Type: application/json
+
+{
+    
+    "Email":"lucky1@gmail.com",
+    "Role":"teacher",
+    "Password":"James@maths"
+   
+}
+###
+
+
+POST http://localhost:5000/api/jss/allocateClass
+Content-Type: application/json
+
+{
+    
+    "className":"Grade 7A",
+    "teacherName":"Mr. Dennis Wakio",
+    "teacherTSC":"49798",
+    "Email":"lucky1@gmail.com"
+   
+}
+
+###
+
+
+POST http://localhost:5000/api/jss/exams
+Content-Type: application/json
+
+{
+    
+    "examName":"Back To School",
+    "examStatus":"completed",
+    "termName":"Term Two",
+    "examDate":"2025-09-29"
+   
+}
+###
+POST http://localhost:5000/api/jss/tusomeAI
+Content-Type: application/json
+
+{
+    
+    "question":"what is the total number of students in this system"
+   
+   
+}
+
+
+###
+
+
+POST http://localhost:5000/api/jss/resultsUploader
+Content-Type: application/json
+
+{
+    
+    "AdmissionNumber":"1670",
+    "SubjectCode":"KIS",
+    "subjectName":"English",
+    "termName":"Term One",
+    "yearName":"2027/2028",
+    "Score":"50",
+    "Remarks":"Average!",
+    "schoolName":"Mafisini Junior School",
+    "Exam":"MidTerm"
+    
+   
+}
+
+
+###
+
+GET http://localhost:5000/api/jss/fetch_students
+
+###
+
+GET http://localhost:5000/api/jss/fetch_teachers
+
+###
+
+GET http://localhost:5000/api/jss/fetch_users
+
+###
+
+PATCH http://localhost:5000/api/jss/patch_student
+Content-Type: application/json
+
+
+{
+    "admNumber":"6078"
+}
+
+###
+
+GET http://localhost:5000/api/jss/fetch_subject
+
+###
+GET http://localhost:5000/api/jss/fetchReportCard/3456/Term%20One/2027%2F2028/Mafisini%20Junior%20School/Back%20To%20School
+
+###
+
+GET http://localhost:5000/api/jss/fetchClassStudents/defaultteacher@gmail.com
+
+###
+GET http://localhost:5000/api/jss/gradeLevelResults/2027%2F2028/Term%20One/EndTerm
