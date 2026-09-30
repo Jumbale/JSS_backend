@@ -3,6 +3,8 @@ require('dotenv').config()
 
 const db=require('../config/db')
 
+const admNo=require('../utils/AdmissionNumberValidator')
+
 const bycrypt=require('bcrypt')
 
 
@@ -10,6 +12,7 @@ module.exports= async(req,res)=>{
      //console.log("hello")
 
      let schoolId;
+     let schools_id;
     console.log(req.body)
 
      console.log(req.body.AdmNumber);
@@ -19,10 +22,10 @@ try{
             Religion,Nationality,
             Status,Category,schoolName}=req.body;
 
-            
+      const validAdmission=admNo(AdmNumber)      
 
 
-    if(req.body.AdmNumber.length!==4) return res.status(400).json({message:"Invalid Admission number!"})
+    if(!validAdmission) return res.status(400).json({message:"Invalid Admission number!"})
 
     const result2=await db.execute(`SELECT * FROM classes WHERE class_name=?`,[Grade])
         console.log(result2[0])
@@ -39,8 +42,13 @@ try{
     })
 
     console.log(schoolId)
-    
-    const query="INSERT INTO students (admission_number,first_name,last_name,grade,gender,date_of_birth,residence,religion,nationality,status,category,class_id,school_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    const [schoolsRows]=await db.execute(`SELECT id FROM schools WHERE school_name=?`,[schoolName])
+    schoolsRows.forEach(schools=>{
+        schools_id=schools.id
+    })
+    const query=`INSERT INTO students (admission_number,first_name,last_name,grade,gender,date_of_birth,residence,religion,
+                nationality,status,category,class_id,school_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     const [result]=await db.execute(query,
         [
         AdmNumber,
@@ -55,7 +63,7 @@ try{
         Status,
         Category,
         classDetails.class_id,
-        schoolId
+        schools_id
 
          
     ]);
@@ -67,7 +75,7 @@ try{
 
 }catch(err){
     res.status(500).json({message:"request failed, try again!"})
-    console.log("Error: "+err.message)
+    console.log(err)
 }
     
 }

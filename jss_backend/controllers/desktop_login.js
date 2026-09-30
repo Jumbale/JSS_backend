@@ -12,7 +12,10 @@ const securePassword=require('../utils/passwordHashed')
 
 module.exports=async(req,res)=>{
     //const{tscNumber,currentPassword,newPassword,passwordRepeat}=req.body;
-    //console.log(req.body)
+    console.log(req.body)
+
+    
+
    
     try{
         if(req.body.newPassword){
@@ -99,14 +102,24 @@ module.exports=async(req,res)=>{
         
         if(user.role!==req.body.Role) return res.status(403).json({message:" Unauthorized Access! "})
 
+        const [schoolRows]=await db.execute(`SELECT id from schools WHERE school_name=?`,[req.body.SchoolName])
+        console.log(schoolRows)
+        if(schoolRows.length===0) return res.status(400).json({success:false,message:"login failed! school does not exist"})
+            // school=req.body.SchoolName
+            // console.log("printed...",school)
+            
+              
+            
+
        
         if(await bcrypt.compare(req.body.Password,user.password)){
             const DesktopUserDetails={username:user.email,role:user.role}
              //console.log(DesktopUserDetails)
             const token=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"30m"})
-            return res.status(200).json({token:token,
-                                         email:user.email
+            res.status(200).json({token:token,
+                                email:user.email
                                              })
+        
         }else{
             return res.status(401).json({message:"Wrong password"})
         }
@@ -116,10 +129,11 @@ module.exports=async(req,res)=>{
        
 
             
-        
+        //console.log("")
     }catch(err){
-        return res.status(500).json({message:"check username and try again"})
+         res.status(500).json({message:"check username and try again"})
     }
     
-
+    console.log("this is ",req.body.SchoolName)
+    return  {schoolName:req.body.SchoolName}
 }

@@ -46,6 +46,7 @@ const fetchSubject=require('../controllers/fetchSubjects');
 const fetchClassLevelStudents=require('../controllers/FetchclassLevelStudents')
 const classLevelResultsFetcher=require('../controllers/classLevelResults')
 const gradeResults=require('../controllers/filteredResults')
+const school=require('../utils/sharedValues')
 
 
 //POST routes
@@ -74,7 +75,7 @@ router.patch('/patch_student',patchStudent);
 
 
 //GET routes
-router.get('/fetch_students',fetchStudents);
+router.get('/fetch_students/:schoolName',fetchStudents);
 router.get('/fetch_teachers',fetchTachers);
 router.get('/fetch_users',FetchUsers);
 router.get('/fetch_subject',fetchSubject);
@@ -82,5 +83,6 @@ router.get('/fetchReportCard/:admNumber/:Terms/:academicYears/:schoolName/:examN
 router.get('/fetchClassStudents/:teachersEmail',fetchClassLevelStudents)
 router.get('/classResultsFetcher',classLevelResultsFetcher)
 router.get('/gradeLevelResults/:AcademicYear/:term/:exams',gradeResults)
+router.get('/shule',school)
 
 module.exports=router

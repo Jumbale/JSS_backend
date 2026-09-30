@@ -13,17 +13,19 @@ const securePassword=require('../utils/passwordHashed')
 module.exports= async(req,res)=>{
     console.log(req.body)
 
+    let schoolId;
+
     const connection=await db.getConnection();
      //console.log("hello")
 
-    const {Username,Role,Password,firstName,lastName,tscNumber,Email,Gender,phoneNumber,Department,Subject}=req.body;
+    const {Username,Role,Password,firstName,lastName,tscNumber,Email,Gender,phoneNumber,Department,Subject,schoolName}=req.body;
 
-    if(verifyField(req.body.Username)|| verifyField(req.body.Role)
-       || verifyField(req.body.Password) || verifyField(req.body.firstName)
-       || verifyField(req.body.lastName) || verifyField(req.body.tscNumber)
-       || verifyField(req.body.Email)||verifyField(req.body.Gender)
-       || verifyField(req.body.phoneNumber)||verifyField(req.body.Department)
-       ||verifyField(req.body.Subject)
+    if(verifyField(Username)|| verifyField(Role)
+       || verifyField(Password) || verifyField(firstName)
+       || verifyField(lastName) || verifyField(tscNumber)
+       || verifyField(Email)||verifyField(Gender)
+       || verifyField(phoneNumber)||verifyField(Department)
+       ||verifyField(Subject)
        ) return res.status(401).json({message:"Fill all fields!"})
 
     const verifiedPassword=await securePassword(req.body.Password)
@@ -50,49 +52,69 @@ module.exports= async(req,res)=>{
 
 
     try{
-      const transaction=  await  connection.beginTransaction();
-            const query2="INSERT users (username,password,role,email) values(?,?,?,?)";
+       const [schoolRows]=await db.execute(`SELECT id FROM schools WHERE school_name=?`,[schoolName])
+             if(schoolRows.length===0) return ""
+             schoolRows.forEach(schools=>{
+             schoolId=schools.id
+             })
+
+        console.log(schoolId)
+
+        try{
+
+            await  connection.beginTransaction();
+             
+            const query2="INSERT users (username,password,role,email,school_id) values(?,?,?,?,?)";
             const [result2]=await db.execute(query2,
                 [
                 req.body.Username,
                 verifiedPassword,
                 req.body.Role,
-                req.body.Email
+                req.body.Email,
+                schoolId
                 
             ]);
+            if(!result2||result2.length===0) return res.status(500).json({message:"server error"})
 
-             const query="INSERT INTO teachers (first_name,last_name,tsc_number,email,gender,phone_number,department,subject) values(?,?,?,?,?,?,?,?)";
+
+             const query="INSERT INTO teachers (first_name,last_name,tsc_number,email,gender,phone_number,department,subject,school_id) values(?,?,?,?,?,?,?,?,?)";
              const [result]=await db.execute(query,
                     [
-                    req.body.firstName,
-                    req.body.lastName,
-                    req.body.tscNumber,
-                    req.body.Email,
-                    req.body.Gender,
-                    req.body.phoneNumber,
-                    req.body.Department,
-                    req.body.Subject
-                    
+                    firstName,
+                    lastName,
+                    tscNumber,
+                    Email,
+                    Gender,
+                    phoneNumber,
+                    Department,
+                    Subject,
+                    schoolId
+  
                 ]);
-
                 await connection.commit();
 
-                 if(result2.length===0||result.length===0) return res.status(500).json({message:"server error"})
-
-   
-
                 return res.status(201).json({
-                message:"Teacher added!"})
+                    message:"Teacher added!"})
 
     }
     catch(err){
-        res.status(500).json({message:"Invalid request"})
-        console.log("Error: "+err.message)
-        await connection.rollback();
+         console.log("Error: "+err.message)
+         
+         await connection.rollback();
+         return res.status(500).json({message:"Failed! Could not register teacher, please confirm the teacher's details and try again."})
+
     }
     finally{
         connection.release();
     }
+
+
+    }
+    catch(err){
+        res.status(500).json({message:"Invalid request"})
+       
+    }
+    
     
 }
 

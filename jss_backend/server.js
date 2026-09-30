@@ -18,6 +18,7 @@ app.use('/api/jss',express.static(path.join(__dirname,'resources/uploads/schoolP
 
 require('dotenv').config()
 
+
 const routes=require('./routes/routes')
 
 app.use('/api/jss',routes)
@@ -25,4 +26,11 @@ app.use('/api/jss',routes)
 
 console.log(__dirname)
 
+
+
+
+
 app.listen(5000,()=>console.log("Listen on port 5000"))
+
+
+

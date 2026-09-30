@@ -4,13 +4,21 @@ const checkTSC=require('../utils/verify_tsc')
 
 module.exports=async(req,res)=>{
     console.log(req.body)
+    let schoolId;
     try{
-       const{className,teachersTSC}=req.body
+       const{className,teachersTSC,schoolName}=req.body
 
        const verifyTSC=checkTSC(req.body.teachersTSC)
        if(!verifyTSC) res.status(401).json({message:"Invalid TSC Number!"})
 
-       const [result2]=await db.execute(`SELECT * FROM teachers WHERE tsc_number=?`,[req.body.teachersTSC])
+        const [schoolRows]=await db.execute(`SELECT id FROM schools WHERE school_name=? `,[schoolName])
+        if(schoolRows) return ""
+
+        schoolRows.forEach(schools=>{
+            schoolId=schools.id
+        })
+
+       const [result2]=await db.execute(`SELECT * FROM teachers WHERE tsc_number=?`,[teachersTSC])
 
 
        const teacherData=result2.find(TSC=>TSC.tsc_number===req.body.teachersTSC)
@@ -23,9 +31,9 @@ module.exports=async(req,res)=>{
 
        
 
-       const query=`INSERT INTO classes (class_name,teacher_tsc_number,email) values(?,?,?)`
+       const query=`INSERT INTO classes (class_name,teacher_tsc_number,email) values(?,?,?,?)`
 
-       const result=await db.execute(query,[className,teachersTSC,teacherData.email])
+       const result=await db.execute(query,[className,teachersTSC,teacherData.email,schoolId])
 
        if(!result) return res.status(401).json({message:"Failed!"})
 

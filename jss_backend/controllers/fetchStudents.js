@@ -1,7 +1,12 @@
 const db=require('../config/db')
 
 module.exports=async(req,res)=>{
+
+  
     try{
+
+        
+
 
         const query=`SELECT * FROM classes`
         const [result]=await db.execute(query)

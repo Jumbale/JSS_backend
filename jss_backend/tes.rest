@@ -48,10 +48,11 @@ POST http://localhost:5000/api/jss/users_signup
 Content-Type: application/json
 
 {
-    "Username":"Mr. James",
-    "Email":"james2@gmail.com",
-    "Password":"James@maths",
-    "Role":"teacher"
+    "Username":"dummy",
+    "Email":"dummydata@gmail.com",
+    "Password":"Dummy",
+    "Role":"admin",
+    "SchoolName":"St. Martins"
 }
 
 ###
@@ -93,9 +94,11 @@ Content-Type: application/json
 
 {
     
-    "Email":"lucky1@gmail.com",
-    "Role":"teacher",
-    "Password":"James@maths"
+    "Email":"admin@gmail.com",
+    "Role":"admin",
+    "Password":"1",
+    "SchoolName":"St. Martins"
+    
    
 }
 ###
@@ -133,7 +136,8 @@ Content-Type: application/json
 
 {
     
-    "question":"what is the total number of students in this system"
+    "question":"hey",
+    "school":"Kidutani  JSS"
    
    
 }
@@ -196,3 +200,7 @@ GET http://localhost:5000/api/jss/fetchClassStudents/defaultteacher@gmail.com
 
 ###
 GET http://localhost:5000/api/jss/gradeLevelResults/2027%2F2028/Term%20One/EndTerm
+
+###
+
+GET http://localhost:5000/api/jss/shule
