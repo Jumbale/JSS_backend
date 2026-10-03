@@ -1,21 +1,27 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import { useAppContext } from "./AuthProviderApi";
 
 export default function DropdownComp() {
-    const users=[{
-        label:"Student", value:"1"
-    },{
-         label:"Teacher", value:"2"
-    },{
-         label:"Parent/Guardian", value:"3"
-    }];
-    
-      const [value,setValue]=useState(null);
-   
+  const { setSelectedRole } = useAppContext();
+  const users = [
+    {
+      label: "Student",
+      value: "student",
+    },
+    {
+      label: "Teacher",
+      value: "teacher",
+    },
+    {
+      label: "Parent/Guardian",
+      value: "parent",
+    },
+  ];
+
+  const [value, setValue] = useState(null);
 
   return (
     <Dropdown
@@ -23,21 +29,26 @@ export default function DropdownComp() {
       containerStyle={styles.dropdownContainer}
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
       data={users}
-      search
       maxHeight={300}
       labelField="label"
       valueField="value"
       placeholder="Select Role"
-      searchPlaceholder="Search..."
-      value={value}
-      onChange={item => {
-        setValue(item.value);
+      //searchPlaceholder="Search..."
+      value={value} //holds the current selected state value
+      onChange={(data) => {
+        setValue(data.value);
+        setSelectedRole(data.value);
+        console.log(data.value);
       }}
-      renderLeftIcon={() => (
-        <AntDesign style={styles.icon} color="black" names="Safety" size={20} />
+      renderRightIcon={() => (
+        <Ionicons
+          style={styles.icon}
+          color="white"
+          name="chevron-down"
+          size={20}
+        />
       )}
     />
   );
@@ -45,43 +56,43 @@ export default function DropdownComp() {
 
 const styles = StyleSheet.create({
   dropdown: {
-    marginVertical: 12,        
-    height: 52,                
-    backgroundColor: 'white',  
-    borderColor: 'black',      
-    borderWidth: 2,            
-    borderRadius: 10,          
-    paddingHorizontal: 12,    
+    marginVertical: 4,
+    height: 45,
+    backgroundColor: "transparent",
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 20,
+    paddingHorizontal: 12,
   },
   dropdownContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: "transparent",
     marginTop: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   icon: {
-    marginRight: 8,           
+    marginRight: 8,
   },
   placeholderStyle: {
     fontSize: 16,
-    color: '#aaa',            
+    color: "silver",
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: 'black',            
+    color: "white",
   },
   iconStyle: {
     width: 22,
     height: 22,
-    tintColor: 'black',        
+    tintColor: "white",
   },
   inputSearchStyle: {
     height: 44,
     fontSize: 16,
     borderRadius: 8,
-    borderColor: '#e2e8f0',
-    backgroundColor: '#f8fafc',
+    borderColor: "#e2e8f0",
+    backgroundColor: "#f8fafc",
   },
 });

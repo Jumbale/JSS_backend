@@ -142,7 +142,7 @@ module.exports=async(question,JssDatabaseData)=>{
     user question:${question}`
 
     const response=await ai.models.generateContent({
-        model:"gemini-3.8-flash",
+        model:"gemini-3.5-flash",
         contents:prompt,
         config:{systemInstruction:systemInstructions,
              temperature:0.2,

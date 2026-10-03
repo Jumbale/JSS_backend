@@ -13,20 +13,23 @@ module.exports=async(req,res)=>{
 
         try{
             const [schoolRows]=await db.execute(`SELECT id FROM schools WHERE school_name=? `,[school])
-              if(schoolRows) return ""
+            console.log()
+              if(schoolRows.length===0) return ""
 
               schoolRows.forEach(schools=>{
               schoolId=schools.id
             })
 
             const [schoolsInfoRows]=await db.execute(`SELECT info_id FROM school_information WHERE school_id=? `,[schoolId])
-              if(schoolsInfoRows) return ""
+            console.log(schoolsInfoRows)
+              if(schoolsInfoRows.length===0) return ""
 
               schoolsInfoRows.forEach(schoolInfo=>{
               schoolInfoId=schoolInfo.info_id
             })
 
-
+                console.log("School id",schoolId)
+                console.log("School information if",schoolInfoId)
 
 
 
@@ -40,12 +43,17 @@ module.exports=async(req,res)=>{
 
                                                     
             ])
-                                                    
+                
+           // res.send(studentsRowData,teachersRowData)
+           console.log(studentsRowData.length)
+          
         
 
             if(!studentsRowData.length&&!teachersRowData.length&&!classesRowData.length &&!classesRowData.length) return res.status(500).json({success:false})
             
             const dataBase={studentsRowData,teachersRowData,classesRowData,resultsRows}
+
+             console.log(dataBase)
 
             const answer=await askGemini(question,dataBase)
 

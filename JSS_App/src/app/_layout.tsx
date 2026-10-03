@@ -2,6 +2,7 @@ import { DarkTheme, DefaultTheme, Stack } from "expo-router";
 import { ThemeProvider } from "expo-router/build/react-navigation";
 import { useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AppContextProvider } from "../components/AuthProviderApi";
 
 export default function Layout() {
   const colorScheme = useColorScheme();
@@ -23,27 +24,29 @@ export default function Layout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={isDark ? darkTheme : lightTheme}>
-        <Stack
-          screenOptions={{
-            animation: "slide_from_right",
-            headerStyle: {
-              backgroundColor: colorScheme === "dark" ? "#000" : "#fff",
-            },
-            contentStyle: {
-              backgroundColor: colorScheme === "dark" ? "#000000" : "#ffffff",
-            },
-            headerTintColor: colorScheme === "dark" ? "#fff" : "#000",
-            headerTitleStyle: { fontWeight: "bold" },
-          }}
-        >
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="Login" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="forgotPassword"
-            options={{ headerShown: false }}
-          />
-        </Stack>
+        <AppContextProvider>
+          <Stack
+            screenOptions={{
+              animation: "slide_from_right",
+              headerStyle: {
+                backgroundColor: colorScheme === "dark" ? "#000" : "#fff",
+              },
+              contentStyle: {
+                backgroundColor: colorScheme === "dark" ? "#000000" : "#ffffff",
+              },
+              headerTintColor: colorScheme === "dark" ? "#fff" : "#000",
+              headerTitleStyle: { fontWeight: "bold" },
+            }}
+          >
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="Login" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="forgotPassword"
+              options={{ headerShown: false }}
+            />
+          </Stack>
+        </AppContextProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

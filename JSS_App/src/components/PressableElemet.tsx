@@ -1,13 +1,15 @@
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function PressableElemet() {
-  const tabsPage = () => {
-    router.replace("/Home");
-  };
+interface LoginButton {
+  onPress: () => void;
+}
+
+export default function PressableElemet({ onPress }: LoginButton) {
+  //const tabsPage = () => {};
   return (
-    <Pressable style={styles.buttonLayout} onPress={tabsPage}>
+    <Pressable style={styles.buttonLayout} onPress={onPress}>
       <Text style={styles.buttonName}>Sign in</Text>
     </Pressable>
   );
@@ -41,13 +43,13 @@ export function BorderedButton() {
           styles.bordered,
           {
             backgroundColor: isActive ? "#03A9F4" : "blue",
-            borderColor: isActive ? "grey" : "white",
+            // borderColor: isActive ? "grey" : "",
           },
         ])}
         onPressIn={() => setIsActive(true)}
         onPressOut={() => setIsActive(false)}
       >
-        <Text style={styles.borderedText}>Sign in</Text>
+        <Text style={styles.borderedText}>Sign-in</Text>
       </Pressable>
     </Link>
   );
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
   },
   bordered: {
     borderWidth: 1,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 4,
     backgroundColor: "blue",
   },

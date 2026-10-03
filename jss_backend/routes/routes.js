@@ -25,6 +25,7 @@ const ResultsUploader=require('../controllers/Results')
 const SchoolUpload=require("../controllers/schoolDetails")
 const NewExam=require('../controllers/exams')
 const GeminiAI=require('../controllers/geminiAIcontroller')
+const LoginController=require('../MobileAppControllers/MobileAppLogin')
 
 //PUT controllers
 const updateStudent=require('../controllers/updateStudent');
@@ -64,6 +65,8 @@ router.post('/resultsUploader',ResultsUploader)
 router.post('/schoolData',upload.single("schoolLogo"),SchoolUpload)
 router.post('/exams',NewExam);
 router.post('/tusomeAI',GeminiAI)
+
+router.post('/loginInApp',LoginController)
 
 
 

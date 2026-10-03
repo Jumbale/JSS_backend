@@ -14,7 +14,7 @@ export default function TabLayout() {
           backgroundColor: colorScheme === "dark" ? "#4A4A4A" : "4A4A4A",
           position: "absolute",
           borderRadius: 30,
-          padding: 5,
+          paddingTop: 5,
           margin: 20,
           borderTopWidth: 0,
           elevation: 8,

@@ -131,13 +131,25 @@ Content-Type: application/json
    
 }
 ###
+POST http://localhost:5000/api/jss/loginInApp
+Content-Type: application/json
+
+{
+    
+    "schoolName":"Back To School",
+    "admissionNumber":"completed",
+    "role":"Term Two",
+   
+   
+}
+###
 POST http://localhost:5000/api/jss/tusomeAI
 Content-Type: application/json
 
 {
     
     "question":"hey",
-    "school":"Kidutani  JSS"
+    "school":"Ngamani JSS"
    
    
 }
