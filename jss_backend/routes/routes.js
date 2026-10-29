@@ -7,6 +7,8 @@ const MulterMiddleWare=require('../utils/multerMiddleWare')
 
 const upload=MulterMiddleWare();
 
+const authenticator=require("../middleware/desktop_auth")
+
 //const authController=require('../controllers/loginController')
 
 //POST controllers
@@ -26,6 +28,8 @@ const SchoolUpload=require("../controllers/schoolDetails")
 const NewExam=require('../controllers/exams')
 const GeminiAI=require('../controllers/geminiAIcontroller')
 const LoginController=require('../MobileAppControllers/MobileAppLogin')
+const refreshToken=require("../controllers/RefreshToken")
+const Logout=require("../controllers/Logout")
 
 //PUT controllers
 const updateStudent=require('../controllers/updateStudent');
@@ -48,44 +52,50 @@ const fetchClassLevelStudents=require('../controllers/FetchclassLevelStudents')
 const classLevelResultsFetcher=require('../controllers/classLevelResults')
 const gradeResults=require('../controllers/filteredResults')
 const school=require('../utils/sharedValues')
+const totalRows=require("../controllers/countRows")
+
 
 
 //POST routes
-router.post('/signup',signUp);
-router.post('/users_signup',signupUsers);
+router.post('/signup',authenticator,signUp);
+router.post('/users_signup',authenticator,signupUsers);
 router.post('/login',loginController);
-router.post('/teachers_signup',teachersController);
+router.post('/teachers_signup',authenticator,teachersController);
 router.post('/desktop_login',desktopLogin);
-router.post('/registerParent',registerParent);
-router.post('/allocateClass',addClass);
-router.post('/resetPassword',ResetPassword);
-router.post('/academicYear',AcademicYear)
+router.post('/registerParent',authenticator,registerParent);
+router.post('/allocateClass',authenticator,addClass);
+router.post('/resetPassword',authenticator,ResetPassword);
+router.post('/academicYear',authenticator,AcademicYear)
 router.post('/newSubject',AddSubject)
-router.post('/resultsUploader',ResultsUploader)
-router.post('/schoolData',upload.single("schoolLogo"),SchoolUpload)
-router.post('/exams',NewExam);
-router.post('/tusomeAI',GeminiAI)
+router.post('/resultsUploader',authenticator,ResultsUploader)
+router.post('/schoolData',upload.single("schoolLogo"),authenticator,SchoolUpload)
+router.post('/exams',authenticator,NewExam);
+router.post('/tusomeAI',authenticator,GeminiAI)
 
 router.post('/loginInApp',LoginController)
+router.post('/refreshTokens',refreshToken)
+router.post('/logout',Logout)
 
 
 
 //PATCH routes
-router.patch('/patch_student',patchStudent);
+router.patch('/patch_student',authenticator,patchStudent);
 
 
 
 
 
 //GET routes
-router.get('/fetch_students/:schoolName',fetchStudents);
-router.get('/fetch_teachers',fetchTachers);
-router.get('/fetch_users',FetchUsers);
-router.get('/fetch_subject',fetchSubject);
-router.get('/fetchReportCard/:admNumber/:Terms/:academicYears/:schoolName/:examName',ReportGeneration);
-router.get('/fetchClassStudents/:teachersEmail',fetchClassLevelStudents)
-router.get('/classResultsFetcher',classLevelResultsFetcher)
-router.get('/gradeLevelResults/:AcademicYear/:term/:exams',gradeResults)
-router.get('/shule',school)
+router.get('/fetch_students/:schoolName',authenticator,fetchStudents);
+router.get('/fetch_teachers',authenticator,fetchTachers);
+router.get('/fetch_users',authenticator,FetchUsers);
+router.get('/fetch_subject',authenticator,fetchSubject);
+router.get('/fetchReportCard/:admNumber/:Terms/:academicYears/:schoolName/:examName',authenticator,ReportGeneration);
+router.get('/fetchClassStudents/:teachersEmail',authenticator,fetchClassLevelStudents)
+router.get('/classResultsFetcher',authenticator,classLevelResultsFetcher)
+router.get('/gradeLevelResults/:AcademicYear/:term/:exams',authenticator,gradeResults)
+router.get('/shule',authenticator,school)
+router.get('/rowsCount',authenticator,totalRows)
+
 
 module.exports=router

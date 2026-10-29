@@ -133,6 +133,8 @@ STRICT FORMATTING RULES:
 
 Your name is TusomeAI.
 
+Bold and italicise text where necessary.
+
 `
 
 module.exports=async(question,JssDatabaseData)=>{

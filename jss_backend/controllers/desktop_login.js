@@ -12,7 +12,9 @@ const securePassword=require('../utils/passwordHashed')
 
 module.exports=async(req,res)=>{
     //const{tscNumber,currentPassword,newPassword,passwordRepeat}=req.body;
-    console.log(req.body)
+    //console.log(req.body)
+
+   
 
     
 
@@ -104,21 +106,42 @@ module.exports=async(req,res)=>{
 
         const [schoolRows]=await db.execute(`SELECT id from schools WHERE school_name=?`,[req.body.SchoolName])
         console.log(schoolRows)
-        if(schoolRows.length===0) return res.status(400).json({success:false,message:"login failed! school does not exist"})
+        if(schoolRows.length===0) return res.status(400).json({success:false,message:"login failed. School not found!"})
             // school=req.body.SchoolName
             // console.log("printed...",school)
             
               
-            
+            console.log("user data",user)
 
        
         if(await bcrypt.compare(req.body.Password,user.password)){
-            const DesktopUserDetails={username:user.email,role:user.role}
-             //console.log(DesktopUserDetails)
-            const token=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"30m"})
-            res.status(200).json({token:token,
-                                email:user.email
-                                             })
+            //console.log("passed here...")
+            const DesktopUserDetails={userEmail:user.email,role:user.role}
+            console.log("This is the payload...",DesktopUserDetails)
+            const accessToken=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"30m"})
+            const refreshToken=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"7d"})
+            const hashedRefreshToken=await bcrypt.hash(refreshToken,10)
+
+            const refreshTokenLife=7
+
+            const refreshTokenExpiresIn=new Date(Date.now()+refreshTokenLife*24*60*60*1000)
+
+            console.log("access token",accessToken)
+            
+            console.log("hashed refresh token",hashedRefreshToken)
+
+     
+
+           const [savedToken]= await db.execute(`INSERT INTO refresh_tokens (user_id,token_hash,expires_at) VALUES (?,?,?)`,[user.id,hashedRefreshToken,refreshTokenExpiresIn])
+           console.log("passed here too",savedToken)
+           if(!savedToken || savedToken.length===0) return res.status(500).json({success:false, message:"refresh token not saved"})
+
+            
+            res.status(200).json({
+                                TokensForEmail:user.email,
+                                refreshToken:refreshToken,
+                                accessToken:accessToken
+                                })
         
         }else{
             return res.status(401).json({message:"Wrong password"})
@@ -131,9 +154,12 @@ module.exports=async(req,res)=>{
             
         //console.log("")
     }catch(err){
-         res.status(500).json({message:"check username and try again"})
+        // res.status(500).json({message:"check username and try again"})
+         console.log(err)
     }
     
-    console.log("this is ",req.body.SchoolName)
-    return  {schoolName:req.body.SchoolName}
+        console.log("this is ",req.body.SchoolName)
+        return  {schoolName:req.body.SchoolName}
+
+   // return  DesktopUser={name:"my name"}
 }

@@ -14,6 +14,7 @@ module.exports= async(req,res)=>{
      let schoolId;
      let schools_id;
     console.log(req.body)
+    console.log(req.headers)
 
      console.log(req.body.AdmNumber);
 try{

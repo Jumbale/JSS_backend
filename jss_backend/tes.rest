@@ -92,12 +92,13 @@ Content-Type: application/json
 POST http://localhost:5000/api/jss/desktop_login
 Content-Type: application/json
 
+
 {
     
-    "Email":"admin@gmail.com",
+    "Email":"ngamani@gmail.com",
     "Role":"admin",
-    "Password":"1",
-    "SchoolName":"St. Martins"
+    "Password":"Ngamani@2026",
+    "SchoolName":"Ngamani JSS"
     
    
 }
@@ -136,9 +137,9 @@ Content-Type: application/json
 
 {
     
-    "schoolName":"Back To School",
-    "admissionNumber":"completed",
-    "role":"Term Two",
+    "school":"Ngamani JSS",
+    "password":"NGMN0002",
+    "role":"student"
    
    
 }
@@ -175,11 +176,36 @@ Content-Type: application/json
     
    
 }
+###
 
+POST http://localhost:5000/api/jss/refreshTokens
+Content-Type: application/json
+
+{
+    
+    "userEmail":"ngamani@gmail.com",
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJuZ2FtYW5pQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc5MjU3MjY1MywiZXhwIjoxNzkzMTc3NDUzfQ.Oa_2EHTXRoiKrVXow06w7OWo2YaQMsUp7BM8Jmnis0Y"
+   
+   
+}
 
 ###
 
-GET http://localhost:5000/api/jss/fetch_students
+POST http://localhost:5000/api/jss/logout
+Content-Type: application/json
+
+{
+    
+    "userEmail":"ngamani@gmail.com"
+    
+   
+   
+}
+
+###
+
+GET http://localhost:5000/api/jss/fetch_students/Ngamani%20JSS
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5nYW1hbmlAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzkyNjQxOTgzLCJleHAiOjE3OTI2NDIwNDN9.Xwj906dB99AbavooQm5cEzacRFpnRkuW5Dmz0RYzcLo
 
 ###
 
