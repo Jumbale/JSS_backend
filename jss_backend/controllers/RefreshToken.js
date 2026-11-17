@@ -51,7 +51,7 @@ module.exports=async(req,res)=>{
 
            if(!isVerified) return res.status(403).json({message:"invalid token or token expired"})
 
-            const newAccessToken=jwt.sign({email:Email,role:userRole},process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"1m"})
+            const newAccessToken=jwt.sign({email:Email,role:userRole},process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"2m"})
 
             res.status(200).json({newAccessToken:newAccessToken})
 

@@ -118,7 +118,7 @@ module.exports=async(req,res)=>{
             //console.log("passed here...")
             const DesktopUserDetails={userEmail:user.email,role:user.role}
             console.log("This is the payload...",DesktopUserDetails)
-            const accessToken=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"30m"})
+            const accessToken=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"2m"})
             const refreshToken=jwt.sign(DesktopUserDetails,process.env.DESKTOP_ACCESS_TOKEN,{expiresIn:"7d"})
             const hashedRefreshToken=await bcrypt.hash(refreshToken,10)
 

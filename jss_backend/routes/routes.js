@@ -30,6 +30,7 @@ const GeminiAI=require('../controllers/geminiAIcontroller')
 const LoginController=require('../MobileAppControllers/MobileAppLogin')
 const refreshToken=require("../controllers/RefreshToken")
 const Logout=require("../controllers/Logout")
+const sendSms=require("../controllers/sms")
 
 //PUT controllers
 const updateStudent=require('../controllers/updateStudent');
@@ -72,9 +73,12 @@ router.post('/schoolData',upload.single("schoolLogo"),authenticator,SchoolUpload
 router.post('/exams',authenticator,NewExam);
 router.post('/tusomeAI',authenticator,GeminiAI)
 
+
 router.post('/loginInApp',LoginController)
 router.post('/refreshTokens',refreshToken)
 router.post('/logout',Logout)
+router.post('/rowsCount',authenticator,totalRows)
+router.post('/sms',sendSms)
 
 
 
@@ -95,7 +99,7 @@ router.get('/fetchClassStudents/:teachersEmail',authenticator,fetchClassLevelStu
 router.get('/classResultsFetcher',authenticator,classLevelResultsFetcher)
 router.get('/gradeLevelResults/:AcademicYear/:term/:exams',authenticator,gradeResults)
 router.get('/shule',authenticator,school)
-router.get('/rowsCount',authenticator,totalRows)
+
 
 
 module.exports=router

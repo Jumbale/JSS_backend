@@ -22,9 +22,11 @@
   },
   "dependencies": {
     "@google/genai": "^2.23.0",
+    "africastalking": "^0.8.4",
     "cors": "^2.8.6",
     "groq-sdk": "^1.6.0",
     "multer": "^2.3.0",
-    "puppeteer": "^25.9.0"
+    "puppeteer": "^25.9.0",
+    "twilio": "^6.3.0"
   }
 }

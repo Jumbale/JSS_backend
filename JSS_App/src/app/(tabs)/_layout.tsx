@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import React from "react";
-import { Platform, Pressable, StyleSheet, useColorScheme } from "react-native";
+import { Platform, Pressable, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppTheme } from "../../constants/theme";
 
@@ -27,9 +26,11 @@ export default function TabLayout() {
             <Pressable
               {...restProps}
               android_ripple={{
-                color: isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(37, 99, 235, 0.1)",
+                color: isDark
+                  ? "rgba(255, 255, 255, 0.08)"
+                  : "rgba(37, 99, 235, 0.1)",
                 borderless: true,
-                radius:10
+                radius: 10,
               }}
               style={({ pressed }) => [
                 restProps.style,
@@ -39,6 +40,11 @@ export default function TabLayout() {
               {restProps.children}
             </Pressable>
           );
+        },
+        tabBarItemStyle: {
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -91,7 +97,7 @@ export default function TabLayout() {
         name="Profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
               size={24}
