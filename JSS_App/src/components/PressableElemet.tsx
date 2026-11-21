@@ -4,13 +4,27 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface LoginButton {
   onPress: () => void;
+  title?: string;
+  loading?: boolean;
 }
 
-export default function PressableElemet({ onPress }: LoginButton) {
+export default function PressableElemet({
+  onPress,
+  title = "Sign in",
+  loading = false,
+}: LoginButton) {
   //const tabsPage = () => {};
   return (
-    <Pressable style={styles.buttonLayout} onPress={onPress}>
-      <Text style={styles.buttonName}>Sign in</Text>
+    <Pressable
+      style={({ pressed }) => [
+        styles.buttonLayout,
+        loading && { opacity: 0.7 },
+        pressed && { opacity: 0.85 },
+      ]}
+      onPress={onPress}
+      disabled={loading}
+    >
+      <Text style={styles.buttonName}>{loading ? "Please wait..." : title}</Text>
     </Pressable>
   );
 }

@@ -1,5 +1,6 @@
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import { useBottomTabBarHeight } from "expo-router/build/react-navigation/bottom-tabs";
 import React, { useState } from "react";
 import {
@@ -203,7 +204,12 @@ export default function Dashboard() {
             return (
               <Pressable
                 key={link.id}
-                onPress={() => setActiveLinkId(link.id)}
+                onPress={() => {
+                  setActiveLinkId(link.id);
+                  if (link.id === "fees") {
+                    router.push("/FeePayment");
+                  }
+                }}
                 style={({ pressed }) => [
                   styles.linkCard,
                   isDark && styles.linkCardDark,
@@ -327,9 +333,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.12,
     shadowRadius: 10,
     elevation: 4,
+    borderWidth: 1.5,
+    borderColor: AppTheme.colors.borderStrong,
   },
   studentCardDark: {
     backgroundColor: "#1E293B",
+    borderColor: "#475569",
   },
   studentAvatarCircle: {
     width: 48,
@@ -385,8 +394,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 2,
-    borderWidth: 1,
-    borderColor: AppTheme.colors.border,
+    borderWidth: 1.5,
+    borderColor: AppTheme.colors.borderStrong,
   },
   kpiItem: {
     alignItems: "center",
@@ -410,7 +419,7 @@ const styles = StyleSheet.create({
   },
   cardDark: {
     backgroundColor: "#1E293B",
-    borderColor: "#334155",
+    borderColor: "#475569",
   },
   analyticsCard: {
     backgroundColor: "#FFFFFF",
@@ -422,8 +431,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 3,
-    borderWidth: 1,
-    borderColor: AppTheme.colors.border,
+    borderWidth: 1.5,
+    borderColor: AppTheme.colors.borderStrong,
   },
   analyticsHeader: {
     flexDirection: "row",
@@ -533,7 +542,7 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: AppTheme.roundness.lg,
     borderWidth: 1.5,
-    borderColor: AppTheme.colors.border,
+    borderColor: AppTheme.colors.borderStrong,
     shadowColor: "#0F172A",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -542,7 +551,7 @@ const styles = StyleSheet.create({
   },
   linkCardDark: {
     backgroundColor: "#1E293B",
-    borderColor: "#334155",
+    borderColor: "#475569",
   },
   linkCardSelected: {
     borderColor: AppTheme.colors.primaryLight,

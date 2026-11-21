@@ -89,6 +89,10 @@ export default function Layout() {
                 name="forgotPassword"
                 options={{ headerShown: false }}
               />
+              <Stack.Screen
+                name="FeePayment"
+                options={{ headerShown: false }}
+              />
             </Stack>
           </AppContextProvider>
         </ThemeProvider>

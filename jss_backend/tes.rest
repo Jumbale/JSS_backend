@@ -116,6 +116,20 @@ Content-Type: application/json
     "Email":"lucky1@gmail.com"
    
 }
+###
+
+
+POST http://localhost:5000/api/jss/stkPush
+Content-Type: application/json
+
+{
+    
+    "phoneNumber":"254718603501",
+    "Amount":"1",
+    "admissionNumber":"KDN002"
+    
+   
+}
 
 ###
 
@@ -151,6 +165,18 @@ Content-Type: application/json
     
     "question":"hey",
     "school":"Ngamani JSS"
+   
+   
+}
+
+###
+POST http://localhost:5000/api/jss/sms
+Content-Type: application/json
+
+{
+    
+    "phoneNumber":"+254784448193",
+    "message":"Hello! Thank you for choosing Alucky Investments Ltd. We appreciate your trust and continued support. Your satisfaction is our priority. We look forward to serving you again.Alucky Investments Ltd Your Trusted Partner."
    
    
 }

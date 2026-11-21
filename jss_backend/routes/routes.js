@@ -31,6 +31,9 @@ const LoginController=require('../MobileAppControllers/MobileAppLogin')
 const refreshToken=require("../controllers/RefreshToken")
 const Logout=require("../controllers/Logout")
 const sendSms=require("../controllers/sms")
+const CallBack=require("../controllers/CallBack")
+const mpesaPrompt=require("../controllers/stkPush")
+
 
 //PUT controllers
 const updateStudent=require('../controllers/updateStudent');
@@ -72,6 +75,8 @@ router.post('/resultsUploader',authenticator,ResultsUploader)
 router.post('/schoolData',upload.single("schoolLogo"),authenticator,SchoolUpload)
 router.post('/exams',authenticator,NewExam);
 router.post('/tusomeAI',authenticator,GeminiAI)
+router.post('/callBack',CallBack)
+router.post('/stkPush',mpesaPrompt)
 
 
 router.post('/loginInApp',LoginController)
